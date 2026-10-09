@@ -1,0 +1,166 @@
+facility:
+  name: "District Civil Hospital, Ramnagar"
+  beds: 300
+  type: "Government District Hospital"
+  location: "Uttar Pradesh, India"
+  coordinates: [26.8467, 80.9462] # Center coordinates for campus map
+
+tariffs_and_factors:
+  electricity_tariff_inr_kwh: 8.50   # Commercial / Institutional slab (₹/kWh)
+  water_tariff_inr_kl: 25.00          # Municipal water tariff (₹ per 1,000 Liters)
+  waste_disposal_cost_inr_kg: 12.00   # Haulage and treatment cost
+  emission_factor_kg_co2_kwh: 0.75    # Grid emission factor (kg CO2e/kWh) - CEA Version 19
+  emission_factor_source: "Central Electricity Authority (CEA) CO2 Baseline Database v19 (Default: 0.75 kg CO2/kWh; verify latest CEA figure)"
+
+weights:
+  scorecard:
+    energy: 0.35
+    water: 0.25
+    waste: 0.20
+    air: 0.20
+  priority:
+    savings: 0.40
+    urgency: 0.35
+    ease_of_fix: 0.25
+
+thresholds:
+  energy:
+    night_baseline_multiplier: 1.5
+    anomaly_contamination: 0.05
+    zscore_warning: 2.0
+    zscore_critical: 3.0
+  water:
+    night_flow_window_hours: [2, 3, 4] # 2 AM - 4 AM baseline check
+    night_flow_leak_multiplier: 2.2
+    rolling_window_hours: 24
+    zscore_leak: 2.5
+  waste:
+    bin_capacity_liters: 240
+    overflow_warning_pct: 75.0
+    overflow_critical_pct: 90.0
+    bmw_max_storage_hours: 48 # Bio-Medical Waste Management Rules, 2016
+  air:
+    cpcb_standards:
+      pm25_good: 30
+      pm25_moderate: 60
+      pm25_poor: 90
+      pm25_very_poor: 120
+      pm10_moderate: 100
+      pm10_poor: 250
+    hotspot_min_consecutive_hours: 3
+
+zones:
+  - id: "OPD"
+    name: "OPD & Registration Wing (Block C)"
+    type: "outpatient"
+    lat_offset: 0.0006
+    lon_offset: -0.0008
+    baseline_power_kw: 45
+    baseline_water_lph: 1200
+    occupancy_day: 450
+    occupancy_night: 5
+  - id: "Wards"
+    name: "General & Inpatient Wards (Block A & B)"
+    type: "inpatient"
+    lat_offset: 0.0004
+    lon_offset: 0.0005
+    baseline_power_kw: 65
+    baseline_water_lph: 2400
+    occupancy_day: 320
+    occupancy_night: 290
+  - id: "ICU"
+    name: "ICU & Emergency Trauma Center"
+    type: "critical_care"
+    lat_offset: 0.0001
+    lon_offset: 0.0002
+    baseline_power_kw: 40
+    baseline_water_lph: 800
+    occupancy_day: 60
+    occupancy_night: 55
+  - id: "Labs"
+    name: "Diagnostic Labs & Radiology"
+    type: "clinical_support"
+    lat_offset: -0.0003
+    lon_offset: -0.0006
+    baseline_power_kw: 35
+    baseline_water_lph: 600
+    occupancy_day: 110
+    occupancy_night: 12
+  - id: "Hostel"
+    name: "Doctors & Staff Residential Hostel"
+    type: "residential"
+    lat_offset: -0.0007
+    lon_offset: 0.0007
+    baseline_power_kw: 28
+    baseline_water_lph: 1500
+    occupancy_day: 40
+    occupancy_night: 160
+  - id: "Canteen"
+    name: "Hospital Canteen & Kitchen"
+    type: "services"
+    lat_offset: -0.0005
+    lon_offset: -0.0001
+    baseline_power_kw: 22
+    baseline_water_lph: 900
+    occupancy_day: 180
+    occupancy_night: 8
+  - id: "Parking"
+    name: "Ambulance Bay & Public Parking"
+    type: "outdoors"
+    lat_offset: 0.0008
+    lon_offset: -0.0003
+    baseline_power_kw: 6
+    baseline_water_lph: 100
+    occupancy_day: 90
+    occupancy_night: 15
+  - id: "Generator"
+    name: "Backup DG Generator & Utility Yard"
+    type: "utilities"
+    lat_offset: -0.0008
+    lon_offset: -0.0006
+    baseline_power_kw: 10
+    baseline_water_lph: 200
+    occupancy_day: 10
+    occupancy_night: 4
+
+waste_bins:
+  - id: 1
+    zone: "OPD"
+    type: "General"
+    color: "Green"
+  - id: 2
+    zone: "OPD"
+    type: "Biomedical"
+    color: "Yellow"
+  - id: 3
+    zone: "Wards"
+    type: "Biomedical"
+    color: "Red"
+  - id: 4
+    zone: "Canteen"
+    type: "General"
+    color: "Black"
+  - id: 5
+    zone: "Wards"
+    type: "General"
+    color: "Green"
+  - id: 6
+    zone: "ICU"
+    type: "Biomedical"
+    color: "Yellow"
+  - id: 7
+    zone: "Canteen"
+    type: "General"
+    color: "Green"
+  - id: 8
+    zone: "Labs"
+    type: "Biomedical"
+    color: "Blue"
+  - id: 9
+    zone: "Canteen"
+    type: "General"
+    color: "Black"
+  - id: 10
+    zone: "Hostel"
+    type: "General"
+    color: "Green"

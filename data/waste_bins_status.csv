@@ -1,0 +1,11 @@
+bin_id,zone,waste_category,bin_color,fill_percentage,fill_rate_pct_per_hr,hours_since_emptied,capacity_liters,weight_kg_est,timestamp
+1,OPD,General,Green,32.0,2.0,16.0,240,26.9,2026-10-09 21:21:39.138829
+2,OPD,Biomedical,Yellow,32.0,2.0,16.0,240,34.6,2026-10-09 21:21:39.138829
+3,Wards,Biomedical,Red,44.8,3.2,14.0,240,48.4,2026-10-09 21:21:39.138829
+4,Canteen,General,Black,93.0,14.2,6.5,240,78.1,2026-10-09 21:21:39.138829
+5,Wards,General,Green,44.8,3.2,14.0,240,37.6,2026-10-09 21:21:39.138829
+6,ICU,Biomedical,Yellow,44.8,3.2,14.0,240,48.4,2026-10-09 21:21:39.138829
+7,Canteen,General,Green,88.5,14.2,6.5,240,74.3,2026-10-09 21:21:39.138829
+8,Labs,Biomedical,Blue,68.0,2.4,44.0,240,73.4,2026-10-09 21:21:39.138829
+9,Canteen,General,Black,91.0,14.2,6.5,240,76.4,2026-10-09 21:21:39.138829
+10,Hostel,General,Green,32.0,2.0,16.0,240,26.9,2026-10-09 21:21:39.138829
