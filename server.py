@@ -295,6 +295,49 @@ def run_simulation(sim: SimulationRequest):
         "projected_score": round(proj_score, 1)
     }
 
+# ---------------------------------------------------------
+# LLM MODEL TRAINING & FINE-TUNING REST ENDPOINTS
+# ---------------------------------------------------------
+from models.llm_trainer import EstateLLMTrainer
+
+llm_trainer = EstateLLMTrainer(pipeline.config)
+
+class LLMTrainRequest(BaseModel):
+    base_model: Optional[str] = "Dhara-Llama-Estate-7B"
+    epochs: Optional[int] = 5
+    learning_rate: Optional[float] = 0.0002
+    lora_rank: Optional[int] = 16
+
+class LLMInferRequest(BaseModel):
+    telemetry_prompt: str
+    language: Optional[str] = "English"
+
+@app.get("/api/llm/status")
+def get_llm_status():
+    """Returns current status and checkpoint metadata of the trained Dhara-LLM model."""
+    status = llm_trainer.get_checkpoint_status()
+    if not status:
+        return {"status": "Untrained / Base Model Active", "checkpoint": None}
+    return status
+
+@app.post("/api/llm/train")
+def train_estate_llm_endpoint(req: LLMTrainRequest):
+    """Triggers fine-tuning / training of Dhara-LLM on hospital estate SCADA telemetry."""
+    res = llm_trainer.train_model(
+        base_model=req.base_model,
+        epochs=req.epochs,
+        lr=req.learning_rate,
+        lora_r=req.lora_rank
+    )
+    return res
+
+@app.post("/api/llm/infer")
+def infer_estate_llm_endpoint(req: LLMInferRequest):
+    """Executes reasoning inference using the fine-tuned Dhara estate LLM."""
+    res = llm_trainer.infer(req.telemetry_prompt, language=req.language)
+    return res
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+
