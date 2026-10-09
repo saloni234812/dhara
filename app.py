@@ -851,7 +851,7 @@ def make_donut_chart(labels, values, colors, title="", height=230):
     )
     return fig
 
-def render_spatial_map():
+def render_spatial_map(map_key="campus_map_default"):
     st.markdown("#### 🗺️ Interactive Campus Spatial Health Map")
     st.caption("Click any hospital pavilion to inspect live energy draw, water leaks, and bin fill rates.")
 
@@ -906,7 +906,7 @@ def render_spatial_map():
             weight=2
         ).add_to(m)
 
-    st_folium(m, use_container_width=True, height=360)
+    st_folium(m, use_container_width=True, height=360, key=map_key)
 
 
 def render_executive_command_tab():
@@ -1000,7 +1000,7 @@ def render_executive_command_tab():
     # Spatial Map & Energy Distribution Row
     map_col, pie_col = st.columns([0.55, 0.45])
     with map_col:
-        render_spatial_map()
+        render_spatial_map(map_key="map_exec_cmd")
 
     with pie_col:
         st.markdown("#### ⚡ Campus Energy Distribution by Zone")
@@ -2183,7 +2183,7 @@ if layout_mode == "Persona-Optimized View":
         with tab_admin_llm:
             render_llm_studio_tab()
         with tab_admin_map:
-            render_spatial_map()
+            render_spatial_map(map_key="map_admin_tab")
 
     elif is_ops:
         tab_ops_orders, tab_ops_energy, tab_ops_water, tab_ops_waste, tab_ops_maint = st.tabs([
