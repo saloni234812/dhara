@@ -856,7 +856,13 @@ def render_spatial_map(map_key="campus_map_default"):
     st.caption("Click any hospital pavilion to inspect live energy draw, water leaks, and bin fill rates.")
 
     center_lat, center_lon = config["facility"]["coordinates"]
-    m = folium.Map(location=[center_lat, center_lon], zoom_start=18, tiles="CartoDB positron")
+    m = folium.Map(location=[center_lat, center_lon], zoom_start=18, tiles="OpenStreetMap")
+    folium.TileLayer(
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri World Imagery",
+        name="Satellite View"
+    ).add_to(m)
+    folium.LayerControl(position="topright").add_to(m)
 
     for z in config["zones"]:
         z_lat = center_lat + z["lat_offset"]
